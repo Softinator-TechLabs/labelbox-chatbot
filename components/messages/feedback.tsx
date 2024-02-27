@@ -25,9 +25,7 @@ const Feedback = () => {
           onClick={() => setIsFeedbackFormVisible(true)}
         >
           <div className="h-5 w-5">
-            {/* <RiThumbDownLine className="hover:opacity-50"
-            size={MESSAGE_ICON_SIZE}
-            /> */}
+            {/* <RiThumbDownLine className="hover:opacity-50" size={MESSAGE_ICON_SIZE} /> */}
             <WithTooltip
               delayDuration={500}
               side="bottom"
@@ -44,9 +42,8 @@ const Feedback = () => {
       </div>
 
       {isFeedbackFormVisible && (
-        // This container centers the modal
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          // This is the modal itself
+          {/* This is the modal itself */}
           <div className="bg-gray-600 p-4 rounded text-white w-1/2 max-w-lg">
             <h3 className="text-lg">Provide additional feedback</h3>
             {/* Feedback options */}
