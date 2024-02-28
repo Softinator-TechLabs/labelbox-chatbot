@@ -3,15 +3,18 @@ import React, { useState } from "react"
 import { RiThumbDownLine } from "react-icons/ri"
 import { RiThumbUpLine } from "react-icons/ri"
 import { RxCrossCircled } from "react-icons/rx"
+import { sendfeedback } from "./feedback_action";
 
 export const MESSAGE_ICON_SIZE = 18
-const FeedbackComponent = () => {
+const FeedbackComponent = ({chat_id,msg_id}) => {
   const [feedbackGiven, setFeedbackGiven] = useState(false)
 
   const handleFeedback = feedback => {
     // Process the feedback
     console.log(feedback)
     setFeedbackGiven(true)
+    sendfeedback(chat_id,feedback,msg_id)
+    console.log("feedback "+feedback)
   }
 
   const handleClose = () => {
@@ -35,14 +38,14 @@ const FeedbackComponent = () => {
         <button
           style={{ padding: "0 0.4rem 0 0.6rem" }}
           onClick={() => handleFeedback("positive")}
-          className="text-white-500 hover:text-green-400 mx-1 px-11"
+          className="text-white-500 mx-1 px-11 hover:text-green-400"
           aria-label="Thumbs up"
         >
           <RiThumbUpLine />
         </button>
         <button
           onClick={() => handleFeedback("negative")}
-          className="text-white-500 hover:text-red-400 mx-10"
+          className="text-white-500 mx-10 hover:text-red-400"
           aria-label="Thumbs down"
         >
           <RiThumbDownLine />
@@ -50,7 +53,7 @@ const FeedbackComponent = () => {
         <button
           style={{ padding: "0 0.6rem 0 1.0rem" }}
           onClick={handleClose}
-          className="text-gray-500 hover:text-gray-400 mx-1"
+          className="mx-1 text-gray-500 hover:text-gray-400"
           aria-label="Close"
         >
           <RxCrossCircled size={MESSAGE_ICON_SIZE} />

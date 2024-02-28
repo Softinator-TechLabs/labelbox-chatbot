@@ -193,6 +193,8 @@ export const Message: FC<MessageProps> = ({
       <div className="relative flex w-[300px] flex-col py-6 sm:w-[400px] md:w-[500px] lg:w-[600px] xl:w-[700px]">
         <div className="absolute right-0 top-7">
           <MessageActions
+            chat_id={message.chat_id}
+            msg_id={message.id}
             onCopy={handleCopy}
             onEdit={handleStartEdit}
             isAssistant={message.role === "assistant"}
@@ -308,7 +310,12 @@ export const Message: FC<MessageProps> = ({
           ) : (
             <>
               <MessageMarkdown content={message.content} />
-              {message.role=="assistant" && <FeedbackComponent />}
+              {message.role == "assistant" && (
+                <FeedbackComponent
+                  chat_id={message.chat_id}
+                  msg_id={message.id}
+                />
+              )}
             </>
           )}
         </div>

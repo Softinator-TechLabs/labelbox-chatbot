@@ -4,7 +4,6 @@ import { IconCheck, IconCopy, IconEdit, IconRepeat } from "@tabler/icons-react"
 import { WithTooltip } from "../ui/with-tooltip"
 import Feedback from "./feedback"
 
-
 export const MESSAGE_ICON_SIZE = 18
 
 interface MessageActionsProps {
@@ -12,12 +11,16 @@ interface MessageActionsProps {
   isLast: boolean
   isEditing: boolean
   isHovering: boolean
+  chat_id: string
+  msg_id: string
   onCopy: () => void
   onEdit: () => void
   onRegenerate: () => void
 }
 
 export const MessageActions: FC<MessageActionsProps> = ({
+  chat_id,
+  msg_id,
   isAssistant,
   isLast,
   isEditing,
@@ -83,25 +86,24 @@ export const MessageActions: FC<MessageActionsProps> = ({
 
         {isLast && (
           <>
-          <Feedback />
+            <Feedback chat_id={chat_id} msg_id={msg_id} />
           </>
         )}
 
         {isLast && (
           <>
-          <WithTooltip
-            delayDuration={500}
-            side="bottom"
-            display={<div>Regenerate</div>}
-            trigger={
-              <IconRepeat
-                className="cursor-pointer hover:opacity-50"
-                size={MESSAGE_ICON_SIZE}
-                onClick={onRegenerate}
-              />
-            }
-          />
-          
+            <WithTooltip
+              delayDuration={500}
+              side="bottom"
+              display={<div>Regenerate</div>}
+              trigger={
+                <IconRepeat
+                  className="cursor-pointer hover:opacity-50"
+                  size={MESSAGE_ICON_SIZE}
+                  onClick={onRegenerate}
+                />
+              }
+            />
           </>
         )}
       </div>
