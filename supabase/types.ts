@@ -829,6 +829,8 @@ export type Database = {
           sequence_number: number
           updated_at: string | null
           user_id: string
+          feedback?: string | null
+          labelbox_id?: string | null
         }
         Insert: {
           assistant_id?: string | null
@@ -842,6 +844,8 @@ export type Database = {
           sequence_number: number
           updated_at?: string | null
           user_id: string
+          feedback?: string | null
+          labelbox_id?: string | null
         }
         Update: {
           assistant_id?: string | null
@@ -855,6 +859,8 @@ export type Database = {
           sequence_number?: number
           updated_at?: string | null
           user_id?: string
+          feedback?: string | null
+          labelbox_id?: string | null
         }
         Relationships: [
           {
