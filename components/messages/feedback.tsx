@@ -1,28 +1,34 @@
 import React, { useState } from "react"
 import { RiThumbDownLine } from "react-icons/ri"
 import { WithTooltip } from "../ui/with-tooltip"
-import { sendfeedback } from "./feedback_action"
+//import { sendfeedback } from "./feedback_action"; //data redundancy code
+import { sendfeedback } from "./feedbackaction" //no data redundancy code
+import { useTheme } from "next-themes"
 
 export const MESSAGE_ICON_SIZE = 18
 
-// Define an interface for the component's props
 interface FeedbackProps {
-  chat_id: string // Adjust the type as needed
-  msg_id: string // Adjust the type as needed
+  chat_id: string
+  msg_id: string
 }
 
 const Feedback: React.FC<FeedbackProps> = ({ chat_id, msg_id }) => {
   const [isFeedbackFormVisible, setIsFeedbackFormVisible] = useState(false)
   const [feedbackText, setFeedbackText] = useState("")
   const [feedbackReason, setFeedbackReason] = useState("")
+  const { theme } = useTheme() // Use the useTheme hook to get the current theme
 
   const handleFeedbackSubmit = async () => {
     console.log(feedbackReason, feedbackText)
-    setIsFeedbackFormVisible(false) // Close the feedback form
-    setFeedbackText("") // Reset feedback text
-    setFeedbackReason("") // Reset feedback reason
+    setIsFeedbackFormVisible(false)
+    setFeedbackText("")
+    setFeedbackReason("")
     sendfeedback(chat_id, feedbackText, msg_id)
   }
+
+  // Determine modal background and text color based on the current theme
+  const modalBgColor = theme === "dark" ? "bg-gray-800" : "bg-white"
+  const textColor = theme === "dark" ? "text-white" : "text-black"
 
   return (
     <>
@@ -48,8 +54,10 @@ const Feedback: React.FC<FeedbackProps> = ({ chat_id, msg_id }) => {
       </div>
 
       {isFeedbackFormVisible && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-gray-600 p-4 rounded text-white w-1/2 max-w-lg">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div
+            className={`${modalBgColor} p-4 rounded ${textColor} w-1/2 max-w-lg`}
+          >
             <h3 className="text-lg">Provide additional feedback</h3>
             <div className="my-2">{/* Placeholder for feedback options */}</div>
             <textarea

@@ -1,6 +1,9 @@
 import { supabase } from "@/lib/supabase/browser-client"
 import { TablesInsert, TablesUpdate } from "@/supabase/types"
 
+const MAX_RETRIES = 3 // Maximum number of retries
+const BACKOFF_FACTOR = 500
+
 export const getMessageById = async (messageId: string) => {
   const { data: message } = await supabase
     .from("messages")
@@ -62,6 +65,72 @@ export const updateMessage = async (
   const { data: updatedMessage, error } = await supabase
     .from("messages")
     .update(message)
+    .eq("id", messageId)
+    .select("*")
+    .single()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return updatedMessage
+}
+// export const updateMessageFeedback = async (messageId: string, feedback: string) => {
+//   const { data: updatedMessage, error } = await supabase
+//     .from("messages")
+//     .update({ feedback }) // Specify the feedback field to be updated
+//     .eq("id", messageId)
+//     .select("*")
+//     .single();
+
+//   if (error) {
+//     throw new Error(error.message);
+//   }
+
+//   return updatedMessage;
+// }
+
+export const updateMessageFeedback = async (
+  messageId: string,
+  feedback: string,
+  attempt = 0
+) => {
+  try {
+    const { data: updatedMessage, error } = await supabase
+      .from("messages")
+      .update({ feedback }) // Specify the feedback field to be updated
+      .eq("id", messageId)
+      .single()
+
+    if (error) throw error
+
+    return updatedMessage
+  } catch (error) {
+    if (attempt < MAX_RETRIES) {
+      const backoff = BACKOFF_FACTOR * Math.pow(2, attempt) // Exponential backoff
+      console.log(`Retrying updateMessageFeedback in ${backoff} ms`)
+
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          updateMessageFeedback(messageId, feedback, attempt + 1)
+            .then(resolve)
+            .catch(reject)
+        }, backoff)
+      })
+    } else {
+      throw new Error(
+        `Failed to update message feedback after ${MAX_RETRIES} attempts:`
+      )
+    }
+  }
+}
+export const updateMessagelabelbox = async (
+  messageId: string,
+  labelbox_id: string
+) => {
+  const { data: updatedMessage, error } = await supabase
+    .from("messages")
+    .update({ labelbox_id }) // Specify the feedback field to be updated
     .eq("id", messageId)
     .select("*")
     .single()
