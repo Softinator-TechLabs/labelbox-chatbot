@@ -220,6 +220,8 @@ Open up your repository for your hosted instance of Labelbox.
 
 In the 1st migration file `supabase/migrations/20240108234540_setup.sql` you will need to replace 2 values with the values you got above:
 
+In the `supabase/config.toml ` set project_id with your supabase project name and also replace api url with `project_url`
+
 - `project_url` (line 53): Use the `Project URL` value from above
 - `service_role_key` (line 54): Use the `Service role key` value from above
 
@@ -259,6 +261,8 @@ In environment variables, add the following from the values you got above:
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `NEXT_PUBLIC_OLLAMA_URL` (only needed when using local Ollama models; default: `http://localhost:11434`)
+- `NEXT_PUBLIC_LABELBOX_API_KEY`
+- `NEXT_PUBLIC_LABELBOX_DATASET`
 
 You can also add API keys as environment variables.
 
