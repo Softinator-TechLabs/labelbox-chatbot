@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase/browser-client"
 import { TablesInsert, TablesUpdate } from "@/supabase/types"
 
-const MAX_RETRIES = 3 // Maximum number of retries
+const MAX_RETRIES = 15 // Maximum number of retries
 const BACKOFF_FACTOR = 500
 
 export const getMessageById = async (messageId: string) => {
