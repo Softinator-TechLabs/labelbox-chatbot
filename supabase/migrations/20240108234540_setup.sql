@@ -31,7 +31,7 @@ CREATE OR REPLACE FUNCTION create_duplicate_messages_for_new_chat(old_chat_id UU
 RETURNS VOID AS $$
 BEGIN
     INSERT INTO messages (user_id, chat_id, content, role, model, sequence_number, tokens, created_at, updated_at,feedback,labelbox_id)
-    SELECT new_user_id, new_chat_id, content, role, model, sequence_number, feedback,labelbox_id,tokens, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+    SELECT new_user_id, new_chat_id, content, role, model, sequence_number, feedback,labelbox_id,lastseq,cloudstorage,tokens, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
     FROM messages
     WHERE chat_id = old_chat_id;
 END;

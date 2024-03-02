@@ -103,7 +103,7 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
-          {
+          { 
             foreignKeyName: "assistant_files_assistant_id_fkey"
             columns: ["assistant_id"]
             isOneToOne: false

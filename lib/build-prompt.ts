@@ -117,7 +117,9 @@ export async function buildFinalMessages(
     updated_at: "",
     user_id: "",
     feedback: "",
-    labelbox_id: ""
+    labelbox_id: "",
+    lastseq: "",
+    cloudstorage: ""
   }
 
   finalMessages.unshift(tempSystemMessage)
@@ -232,7 +234,9 @@ export async function buildGoogleGeminiFinalMessages(
     updated_at: "",
     user_id: "",
     feedback: "",
-    labelbox_id: ""
+    labelbox_id: "",
+    lastseq: "",
+    cloudstorage: ""
   }
 
   finalMessages.unshift(tempSystemMessage)
